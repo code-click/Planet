@@ -35,24 +35,30 @@ jobs:
         run: ./gradlew build
         shell: bash
 
-      # 폴더 만드는 스탭
-      - name: make artifacts dir
-        run: mkdir ./artifacts/
-
       # 소스 파일 압축
       - name: Make zip file
         run: zip -r ./$GITHUB_SHA.zip .
         shell: bash
 
-      # AWS S3에 압축파일을 전달하는 설정 및 명령어
-      - name: deploy to s3
-        uses: jakejarvis/s3-sync-action@master
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          args: --acl public-read --follow-symlinks --delete
-        env:
-          AWS_S3_BUCKET: ${{secrets.AWS_PRODUCTION_BUCKET_NAME}}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_IAM_MANAGER_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_IAM_MANAGER_SECRET_ACCESS_KEY }}
-          AWS_REGION: ap-northeast-2
-          SOURCE_DIR: './artifacts'
-          DEST_DIR: 'backend/'
+          aws-access-key-id: ${{ secrets.AWS_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_PW }}
+          aws-region: ap-northeast-2
+
+      - name: Upload to S3
+        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$S3_BUCKET_NAME/$PROJECT_NAME/$GITHUB_SHA.zip
+
+#      # AWS S3에 압축파일을 전달하는 설정 및 명령어
+#      - name: deploy to s3
+#        uses: jakejarvis/s3-sync-action@master
+#        with:
+#          args: --acl public-read --follow-symlinks --delete
+#        env:
+#          AWS_S3_BUCKET: ${{secrets.AWS_PRODUCTION_BUCKET_NAME}}
+#          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_IAM_MANAGER_KEY_ID }}
+#          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_IAM_MANAGER_SECRET_ACCESS_KEY }}
+#          AWS_REGION: ap-northeast-2
+#          SOURCE_DIR: './artifacts'
+#          DEST_DIR: 'backend/'
