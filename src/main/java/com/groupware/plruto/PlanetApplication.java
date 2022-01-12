@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class PlutoApplication {
+public class PlanetApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(PlutoApplication.class, args);
+        SpringApplication.run(PlanetApplication.class, args);
     }
 
 }
