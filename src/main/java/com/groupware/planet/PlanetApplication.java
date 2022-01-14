@@ -1,4 +1,4 @@
-package com.groupware.plruto;
+package com.groupware.planet;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

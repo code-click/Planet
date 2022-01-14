@@ -1,4 +1,4 @@
-package com.groupware.plruto;
+package com.groupware.planet;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

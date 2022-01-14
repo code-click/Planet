@@ -1,0 +1,44 @@
+spring:
+  thymeleaf:
+    prefix: classpath:templates/
+    suffix: .html
+    cache: false
+  datasource:
+    url: jdbc:mariadb://planet.csndvegemmbq.ap-northeast-2.rds.amazonaws.com:3306/Planet
+    #    url: jdbc:oracle:thin:@localhost:1521/xe
+    #    url: jdbc:mariadb://localhost:3306/bootex
+    username: admin
+    password: zhemzmfflr12
+    #    driver-class-name: oracle.jdbc.OracleDriver
+    driver-class-name: org.mariadb.jdbc.Driver
+    #    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+
+    hikari:
+      connection-timeout: 5000
+      validation-timeout: 1000
+      maximum-pool-size: 30
+      minimum-idle: 2
+
+mybatis:
+  type-aliases-package: com.groupware.planet.vo
+  mapper-locations: sqlmap/**/*.xml
+
+logging:
+  level:
+    jdbc:
+      sqlonly: debug
+      sqltiming: off
+      audit: info
+      resultset: off
+      resultsettable: debug
+    org.springframework.web: info
+    com.zaxxer.hikari.HikariDataSource: info
+
+server:
+  error:
+    include-exception: false
+    include-stacktrace: never
+    path: '/error'
+    whitelabel:
+      enabled: true
+  port: 8080
